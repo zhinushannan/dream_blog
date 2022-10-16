@@ -1,0 +1,24 @@
+```text
+【转载】Deepin系统安装Go/Java8/Node/Maven/Docker环境
+工具
+2022-05-03
+https://picgo.kwcoder.club/202206/202206221615882.png
+```
+
+Deepin工具：
+<a href="/p/20220502/" target="_blank">【转载】Deepin 20.5系统外接扩展屏幕不显示？安装配置NVIDIA显卡驱动</a>
+<a href="/p/20220503/" target="_blank">【转载】Deepin系统安装Go/Java8/Node/Maven/Docker环境</a>
+<a href="/p/20220504/" target="_blank">Deepin系统打开WiFi就不能开热点？三个步骤解决问题</a>
+<a href="/p/20220508/" target="_blank">【wine】Deepin中使用exe（Ubuntu通用）</a>
+
+转载自：[https://developer-help.cn/index.php/archives/174/](https://developer-help.cn/index.php/archives/174/)
+本篇文章会自动跳转到对应博客，如未跳转请点击下方链接：
+[https://developer-help.cn/index.php/archives/174/](https://developer-help.cn/index.php/archives/174/)
+
+
+<script>
+
+
+window.location.href = "https://developer-help.cn/index.php/archives/174/";
+
+</script>

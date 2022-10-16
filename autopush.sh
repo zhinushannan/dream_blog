@@ -1,6 +1,6 @@
 #!/bin/bash
 
-now_date=`date +"%Y-%m-%d_%H:%M:%S"`
+now_date=`date +'%Y-%m-%d_%H:%M:%S'`
 
 echo 开始添加变更：git add .
 git add .
