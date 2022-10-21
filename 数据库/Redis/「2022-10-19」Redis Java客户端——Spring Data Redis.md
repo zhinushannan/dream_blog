@@ -13,7 +13,7 @@ SpringData是Spring中数据操作的模块，包含对各种数据库的集成�
 - 支持Redis的发布订阅模型
 - 支持Redis哨兵和Redis集群
 - 支持基于Lettuce的响应式编程
-- 支持基于DK、JSON、字符串、Spring对象的数据序列化及反序列化
+- 支持基于JDK、JSON、字符串、Spring对象的数据序列化及反序列化
 - 支持基于Redis的JDKCollection实现
 
 SpringDataRedis中提供了RedisTemplate 工具类，其中封装了各种对Redis的操作。并且将不同数据类型的操作AP/封装到了不同的类型中：
@@ -173,5 +173,46 @@ public class User {
     }
 ```
 
+<img src="https://picgo.kwcoder.club/202208/202210212304938.png" alt="image-20221021230418699" style="zoom: 50%;" />
 
+此时会发现在存储的字符串中有`@class`字段，该字段占据了大量的空间，甚至超过了对象属性本身占用的空间，这是由于自动序列化和自动反序列化造成的，这是我们不希望看到的，因此不推荐对对象进行自动序列化。
+
+# StringRedisTemplate的使用
+
+## StringRedisTemplate opsForValue
+
+StringRedisTemplate是Spring提供的key和value都使用String序列化方式的类。对于对象的处理我们可以使用该类手动进行序列化和反序列化。
+
+```java
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Test
+    void setString() {
+        stringRedisTemplate.opsForValue().set("user", JSONUtil.toJsonStr(new User("zhangsan", 18)));
+        String userStr = stringRedisTemplate.opsForValue().get("user");
+        User user = JSONUtil.toBean(userStr, User.class);
+        System.out.println(user);
+    }
+```
+
+<img src="https://picgo.kwcoder.club/202208/202210212316284.png" alt="image-20221021231646629" style="zoom: 67%;" />
+
+## StringRedisTemplate opsForHash
+
+```java
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Test
+    void setHash() {
+        stringRedisTemplate.opsForHash().put("user", "name", "zhangsan");
+        stringRedisTemplate.opsForHash().put("user", "age", 18);
+
+        Map<Object, Object> user = stringRedisTemplate.opsForHash().entries("user");
+        System.out.println(user);
+    }
+```
+
+<img src="https://picgo.kwcoder.club/202208/202210212322551.png" alt="image-20221021232200434" style="zoom: 50%;" />
 
