@@ -76,44 +76,62 @@ EXPOSE 22
 ## 使用docker-compose群起固定IP的Hadoop集群
 
 ```shell
+
 version: "2.6"  # docker-compose 版本号
 
 services:
   master:  # 服务名
-    image: centos_hadoop  # 镜像
+    image: centos_ssh:7  # 镜像
     container_name: master  # 容器名
     hostname: master
     volumes:
-      - /Users/zhinushannan/code/hadoop/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/master_dir:/opt/work_dir
     networks:
       test:
         ipv4_address: 172.18.0.2
 
-  slave1:  # 服务名
-    image: centos_hadoop  # 镜像
-    container_name: slave1  # 容器名
+  slave1:
+    image: centos_ssh:7
+    container_name: slave1
     hostname: slave1
     volumes:
-      - /Users/zhinushannan/code/hadoop/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/slave1_dir:/opt/work_dir
     networks:
       test:
         ipv4_address: 172.18.0.3
 
-  slave2:  # 服务名
-    image: centos_hadoop  # 镜像
-    container_name: slave2  # 容器名
+  slave2:
+    image: centos_ssh:7
+    container_name: slave2
     hostname: slave2
     volumes:
-      - /Users/zhinushannan/code/hadoop/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/module:/opt/module
+      - /Users/zhinushannan/docker/taxi_dispatch/data/slave2_dir:/opt/work_dir
     networks:
       test:
         ipv4_address: 172.18.0.4
+  
+  mysql_hadoop:
+    image: mysql/mysql-server:5.7
+    container_name: mysql_hadoop
+    hostname: mysql_hadoop
+    volumes:
+      - /Users/zhinushannan/docker/taxi_dispatch/data/var-lib-mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: hadoop
+    networks:
+      test:
+        ipv4_address: 172.18.0.5
+
 
 networks:
    test:
       ipam:
          config:
            - subnet: 172.18.0.0/16
+
 
 ```
 
@@ -542,5 +560,4 @@ docker network rm hadoop_test
 # 删除数据卷（或者保留供下次使用）
 rm -r /Users/zhinushannan/code/hadoop/module
 ```
-
 
